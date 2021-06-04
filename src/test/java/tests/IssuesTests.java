@@ -2,6 +2,8 @@ package tests;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
@@ -11,6 +13,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 
+@Feature("IssuesTests")
 public class IssuesTests {
 
     WebSteps steps = new WebSteps();
@@ -21,6 +24,7 @@ public class IssuesTests {
             ARCHEOLOGY_TITLE = "с днем археолога!";
 
     @Test
+    @Story("Проверка текста с простым Selenide")
     void checkIssuesNameWith() {
         open(GITHUB);
 
@@ -35,6 +39,7 @@ public class IssuesTests {
 
 
     @Test
+    @Story("Проверка текста через лямбда степы")
     void checkIssuesNameWithSteps() {
 
         step("Открываем Github", () -> {
@@ -59,6 +64,7 @@ public class IssuesTests {
     }
 
     @Test
+    @Story("Проверка текста через анотации step")
     void checkIssuesNameWithAnnotations() {
         steps.openUrl(GITHUB);
         steps.findRepository(REPOSITORY);
