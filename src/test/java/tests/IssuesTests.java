@@ -13,6 +13,8 @@ import static io.qameta.allure.Allure.step;
 
 public class IssuesTests {
 
+    WebSteps steps = new WebSteps();
+
     private String GITHUB = "https://github.com",
             REPOSITORY = "eroshenkoam/allure-example",
             ISSUE_TITLE = "Issues",
@@ -54,6 +56,14 @@ public class IssuesTests {
             $("#issue_65_link").shouldHave(text(ARCHEOLOGY_TITLE));
         });
 
+    }
+
+    @Test
+    void checkIssuesNameWithAnnotations() {
+        steps.openUrl(GITHUB);
+        steps.findRepository(REPOSITORY);
+        steps.clickOnTab(ISSUE_TITLE);
+        steps.checkTitle(ARCHEOLOGY_TITLE);
     }
 
 }
