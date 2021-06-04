@@ -13,27 +13,46 @@ import static io.qameta.allure.Allure.step;
 
 public class IssuesTests {
 
-    @Test
-    void checkIssuesName() {
+    private String GITHUB = "https://github.com",
+            REPOSITORY = "eroshenkoam/allure-example",
+            ISSUE_TITLE = "Issues",
+            ARCHEOLOGY_TITLE = "с днем археолога!";
 
-         step("Открываем Github", () -> {
-             open("https://github.com");
-                 });
+    @Test
+    void checkIssuesNameWith() {
+        open(GITHUB);
+
+        $(".header-search-input").click();
+        $(".header-search-input").sendKeys(REPOSITORY);
+        $(".header-search-input").pressEnter();
+        $(By.linkText(REPOSITORY)).click();
+        $(withText(ISSUE_TITLE)).click();
+        $("#issue_65_link").shouldHave(text(ARCHEOLOGY_TITLE));
+
+    }
+
+
+    @Test
+    void checkIssuesNameWithSteps() {
+
+        step("Открываем Github", () -> {
+            open(GITHUB);
+        });
 
         step("Ищем репозиторий и переходим на него", () -> {
             $(".header-search-input").click();
-            $(".header-search-input").sendKeys("eroshenkoam/allure-example");
+            $(".header-search-input").sendKeys(REPOSITORY);
             $(".header-search-input").pressEnter();
-            $(By.linkText("eroshenkoam/allure-example")).click();
-                });
+            $(By.linkText(REPOSITORY)).click();
+        });
 
         step("Кликаем на вкладку Issues", () -> {
-            $(withText("Issues")).click();
-                });
+            $(withText(ISSUE_TITLE)).click();
+        });
 
         step("Проверяем, что issue 65 имеет название 'с днем археолога!'", () -> {
-            $("#issue_65_link").shouldHave(text("с днем археолога!"));
-                });
+            $("#issue_65_link").shouldHave(text(ARCHEOLOGY_TITLE));
+        });
 
     }
 
