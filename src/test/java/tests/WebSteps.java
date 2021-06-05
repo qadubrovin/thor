@@ -1,12 +1,13 @@
 package tests;
 
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.withText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class WebSteps {
 
@@ -32,4 +33,10 @@ public class WebSteps {
     public void checkTitle(String title) {
         $("#issue_65_link").shouldHave(text(title));
     }
+
+    @Attachment(value = "Screenshot", type = "image/png")
+    public byte[] makeScreenshot() {
+        return screenshot(OutputType.BYTES);
+    }
+
 }

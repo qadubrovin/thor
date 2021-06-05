@@ -2,15 +2,20 @@ package tests;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.withText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 
 @Feature("IssuesTests")
@@ -34,6 +39,8 @@ public class IssuesTests {
         $(By.linkText(REPOSITORY)).click();
         $(withText(ISSUE_TITLE)).click();
         $("#issue_65_link").shouldHave(text(ARCHEOLOGY_TITLE));
+        Allure.attachment("Screenshot", screenshot(OutputType.BASE64));
+        makeScreenshot();
 
     }
 
@@ -70,6 +77,12 @@ public class IssuesTests {
         steps.findRepository(REPOSITORY);
         steps.clickOnTab(ISSUE_TITLE);
         steps.checkTitle(ARCHEOLOGY_TITLE);
+        steps.makeScreenshot();
+    }
+
+    private void makeScreenshot() {
+        InputStream stream = new ByteArrayInputStream(screenshot(OutputType.BYTES));
+        Allure.attachment("Screenshot", stream);
     }
 
 }
